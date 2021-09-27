@@ -9,6 +9,9 @@ from InternalLogic import InternalLogic
 
 
 class Rollbot(InternalLogic):
+    """
+    Класс бота. Содержит в себе обработчики сообщений. Тестировать не надо
+    """
     def __init__(self, master_id: int = 351693351, rolls: dict = None):
         logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                             level=logging.INFO, filename="data/rollbot.log")
@@ -26,8 +29,8 @@ class Rollbot(InternalLogic):
         }
 
     # params: update and context
-    def simple_roll(self, update: Update, _, cnt=1, rolls_dice=20):
-        text = self.get_user_name(update) + ': ' + self.process_roll(update.message.text, cnt, rolls_dice)
+    def simple_roll(self, update: Update, _, default_count=1, default_dice=20):
+        text = self.get_user_name(update) + ': ' + self.process_roll(update.message.text, default_count, default_dice)
         self.reply_to_message(update, text)
 
     # just ping
@@ -90,6 +93,7 @@ The bot also collects statistics:
             update.message.reply_text("Error")
 
 
+# запуск роллбота
 def init(token):
     if not os.path.exists('data'):
         os.makedirs('data')
